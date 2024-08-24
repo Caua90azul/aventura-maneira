@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>História Interativa</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>História Interativa</h1>
+        </div>
+    </header>
+    <main class="container">
+        <section id="chapter" class="story">
+            <!-- O conteúdo do capítulo será atualizado pelo JavaScript -->
+        </section>
+    </main>
+    <script>
+        const chapters = {
+            start: {
+                title: "Capítulo 1: A Escolha",
+                text: "Você está em uma floresta densa e misteriosa. A noite está caindo e você ouve sons estranhos ao seu redor. Você deve tomar uma decisão crucial para a sua sobrevivência.",
+                choices: [
+                    { text: "Seguir o caminho iluminado", next: "path" },
+                    { text: "Explorar a caverna escura", next: "cave" }
+                ]
+            },
+            path: {
+                title: "Capítulo 2: O Caminho Iluminado",
+                text: "Você segue o caminho iluminado e encontra uma pequena cabana. O interior parece acolhedor, mas algo não parece certo. Você ouve um ruído vindo do sótão.",
+                choices: [
+                    { text: "Investigar o sótão", next: "attic" },
+                    { text: "Ignorar o ruído e descansar", next: "rest" }
+                ]
+            },
+            cave: {
+                title: "Capítulo 2: A Caverna Escura",
+                text: "A caverna é úmida e escura. Você encontra um mapa antigo, mas também ouve algo se movendo nas sombras. O que fazer?",
+                choices: [
+                    { text: "Seguir o mapa", next: "map" },
+                    { text: "Procurar a origem dos sons", next: "sounds" }
+                ]
+            },
+            attic: {
+                title: "Capítulo 3: O Mistério do Sótão",
+                text: "Você sobe ao sótão e encontra uma caixa antiga. Dentro da caixa há um diário com anotações enigmáticas. Você decide:",
+                choices: [
+                    { text: "Ler o diário", next: "diary" },
+                    { text: "Guardar o diário e sair da cabana", next: "exit" }
+                ]
+            },
+            rest: {
+                title: "Capítulo 3: Uma Noite Tranquila",
+                text: "Você decide descansar e passar a noite na cabana. A manhã seguinte revela uma pista crucial para sair da floresta.",
+                choices: [
+                    { text: "Seguir a pista", next: "pista" },
+                    { text: "Explorar mais a cabana", next: "explore" }
+                ]
+            },
+            map: {
+                title: "Capítulo 3: O Mapa Antigo",
+                text: "O mapa leva a uma saída secreta da floresta, mas você deve enfrentar um desafio final para escapar.",
+                choices: [
+                    { text: "Enfrentar o desafio", next: "challenge" },
+                    { text: "Voltar para a caverna", next: "cave" }
+                ]
+            },
+            sounds: {
+                title: "Capítulo 3: Os Sons Misteriosos",
+                text: "Você segue os sons e descobre um grupo de viajantes perdidos. Eles podem ajudar ou causar mais problemas.",
+                choices: [
+                    { text: "Pedir ajuda", next: "help" },
+                    { text: "Ignorar e continuar explorando", next: "explore" }
+                ]
+            },
+            diary: {
+                title: "Capítulo 4: Revelações do Diário",
+                text: "O diário revela segredos sobre a floresta e uma rota segura para fora. Agora você pode finalmente escapar.",
+                choices: [
+                    { text: "Sair da floresta", next: "escape" }
+                ]
+            },
+            exit: {
+                title: "Capítulo 4: Saindo da Cabana",
+                text: "Você decide sair da cabana. A floresta parece mais amigável agora. Você encontra a saída com facilidade.",
+                choices: [
+                    { text: "Sair da floresta", next: "escape" }
+                ]
+            },
+            pista: {
+                title: "Capítulo 4: A Pista",
+                text: "A pista leva a uma clareira onde você encontra um grupo de moradores locais que podem ajudá-lo a sair da floresta.",
+                choices: [
+                    { text: "Pedir ajuda aos moradores", next: "help" },
+                    { text: "Explorar a clareira", next: "explore" }
+                ]
+            },
+            explore: {
+                title: "Capítulo 4: Explorando Mais",
+                text: "Você explora mais a área e encontra uma segunda saída da floresta, mas é uma jornada longa e difícil.",
+                choices: [
+                    { text: "Tentar a nova saída", next: "escape" },
+                    { text: "Voltar e tentar algo diferente", next: "start" }
+                ]
+            },
+            challenge: {
+                title: "Capítulo 4: O Desafio",
+                text: "Você enfrenta o desafio e vence! A saída da floresta está ao seu alcance.",
+                choices: [
+                    { text: "Sair da floresta", next: "escape" }
+                ]
+            },
+            help: {
+                title: "Capítulo 4: Ajuda dos Viajantes",
+                text: "Os viajantes ajudam você a encontrar a saída da floresta com segurança. Você está livre.",
+                choices: [
+                    { text: "Sair da floresta", next: "escape" }
+                ]
+            },
+            escape: {
+                title: "Fim da História",
+                text: "Parabéns! Você conseguiu escapar da floresta e concluir sua jornada. Esperamos que tenha gostado da aventura!",
+                choices: []
+            }
+        };
+
+        function renderChapter(chapterId) {
+            const chapter = chapters[chapterId];
+            if (chapter) {
+                document.getElementById('chapter').innerHTML = `
+                    <h2>${chapter.title}</h2>
+                    <p>${chapter.text}</p>
+                    <div class="choices">
+                        ${chapter.choices.map(choice => `
+                            <button onclick="choose('${choice.next}')">${choice.text}</button>
+                        `).join('')}
+                    </div>
+                `;
+            }
+        }
+
+        function choose(nextChapter) {
+            renderChapter(nextChapter);
+        }
+
+        // Start the story
+        renderChapter('start');
+    </script>
+</body>
+</html>
